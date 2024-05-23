@@ -1,13 +1,13 @@
 # Increases the amount of traffic an Nginx server can handle.
 
-# Increase the ULIMIT of the default file
-exec { 'fix--for-nginx':
+# Increase the UNLIMIT of the default file
+exec { 'update unlimit':
   command => 'sed -i "s/15/4096/" /etc/default/nginx',
-  path    => '/usr/local/bin/:/bin/'
-} ->
+  provider    => 'shell'
+}
 
 # Restart Nginx
-exec { 'nginx-restart':
-  command => 'nginx restart',
-  path    => '/etc/init.d/'
+-> exec { 'nginx-restart':
+  command => 'service nginx restart',
+  provider    => 'shell'
 }
